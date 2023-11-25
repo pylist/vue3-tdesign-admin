@@ -1,13 +1,9 @@
-<script setup lang="jsx">
+<script setup>
 import { ref } from 'vue';
 
 import CreateUser from './components/CreateUser.vue';
 
 const CreateUserRef = ref();
-
-const openCreateUser = () => {
-  CreateUserRef.value.open();
-};
 
 const columns = ref([
   { colKey: 'avatar', title: '头像' },
@@ -16,27 +12,33 @@ const columns = ref([
   {
     colKey: 'operation',
     title: '操作',
-    cell: (h, { row }) => {
-      return (
-        <t-space>
-          <t-button onClick={() => openCreateUser()}>编辑</t-button>
-          <t-button>删除</t-button>
-        </t-space>
-      );
-    },
   },
 ]);
 const listData = ref([{ id: 1, avatar: 'test', nickName: '测试' }]);
+
+const openCreateUser = () => {
+  CreateUserRef.value.open();
+};
+const handleDeleteUser = (row) => {
+  console.log(row.id);
+};
 </script>
 <template>
   <div>
     <div>
-      <t-button>新增用户</t-button>
+      <t-button @click="openCreateUser">新增用户</t-button>
     </div>
     <div>
-      <t-table row-key="id" :columns="columns" :data="listData"></t-table>
+      <t-table row-key="id" :columns="columns" :data="listData">
+        <template #operation="{ row }">
+          <t-space>
+            <t-button @click="openCreateUser">编辑</t-button>
+            <t-button theme="danger" @click="handleDeleteUser(row)">删除</t-button>
+          </t-space>
+        </template>
+      </t-table>
     </div>
-    <CreateUser ref="CreateUserRef"></CreateUser>
+    <create-user ref="CreateUserRef"></create-user>
   </div>
 </template>
 
