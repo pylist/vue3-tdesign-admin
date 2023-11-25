@@ -5,6 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { ConfigEnv, loadEnv, UserConfig } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
 import svgLoader from 'vite-svg-loader';
+import UnoCSS from 'unocss/vite';
 
 const CWD = process.cwd();
 
@@ -33,6 +34,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
     plugins: [
       vue(),
+      UnoCSS(),
       vueJsx(),
       viteMockServe({
         mockPath: 'mock',

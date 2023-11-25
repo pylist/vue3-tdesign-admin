@@ -10,6 +10,7 @@ import i18n from './locales';
 import 'tdesign-vue-next/es/style/index.css';
 import '@/style/index.less';
 import './permission';
+import 'virtual:uno.css';
 
 const app = createApp(App);
 

@@ -1,3 +1,22 @@
+<template>
+  <div>
+    <div class="mb-3">
+      <t-button @click="openCreateUser">新增用户</t-button>
+    </div>
+    <div>
+      <t-table row-key="id" :columns="columns" :data="listData">
+        <template #operation="{ row }">
+          <t-space>
+            <t-button @click="openCreateUser">编辑</t-button>
+            <t-button theme="danger" @click="handleDeleteUser(row)">删除</t-button>
+          </t-space>
+        </template>
+      </t-table>
+    </div>
+    <create-user ref="CreateUserRef"></create-user>
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue';
 
@@ -23,23 +42,5 @@ const handleDeleteUser = (row) => {
   console.log(row.id);
 };
 </script>
-<template>
-  <div>
-    <div>
-      <t-button @click="openCreateUser">新增用户</t-button>
-    </div>
-    <div>
-      <t-table row-key="id" :columns="columns" :data="listData">
-        <template #operation="{ row }">
-          <t-space>
-            <t-button @click="openCreateUser">编辑</t-button>
-            <t-button theme="danger" @click="handleDeleteUser(row)">删除</t-button>
-          </t-space>
-        </template>
-      </t-table>
-    </div>
-    <create-user ref="CreateUserRef"></create-user>
-  </div>
-</template>
 
 <style scoped lang="less"></style>
