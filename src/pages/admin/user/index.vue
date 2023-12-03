@@ -5,29 +5,37 @@
     </div>
     <div>
       <t-table row-key="id" :columns="columns" :data="listData">
+        <template #avatar="{ row }">
+          <t-avatar :image="row.avatar"></t-avatar>
+        </template>
         <template #operation="{ row }">
           <t-space>
-            <t-button @click="openCreateUser">编辑</t-button>
+            <t-button @click="openUpdateUser(row)">编辑</t-button>
             <t-button theme="danger" @click="handleDeleteUser(row)">删除</t-button>
           </t-space>
         </template>
       </t-table>
     </div>
-    <create-user ref="CreateUserRef"></create-user>
+    <create-update-user ref="CreateUpdateUserRef" @refresh="getListData"></create-update-user>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-import CreateUser from './components/CreateUser.vue';
+import { UserList, DeleteUser } from '@/api/admin/user';
+import { useTable } from '@/hooks/table';
 
-const CreateUserRef = ref();
+import CreateUpdateUser from './components/CreateUpdateUser.vue';
+
+const table = useTable();
+const CreateUpdateUserRef = ref();
 
 const columns = ref([
-  { colKey: 'avatar', title: '头像' },
+  { colKey: 'avatar', title: '头像', width: 100 },
   { colKey: 'id', title: '用户ID', width: '100' },
-  { colKey: 'nickName', title: '昵称' },
+  { colKey: 'nickName', title: '昵称', width: 200 },
+  { colKey: 'username', title: '用户名', width: 200 },
   {
     colKey: 'operation',
     title: '操作',
@@ -36,11 +44,30 @@ const columns = ref([
 const listData = ref([{ id: 1, avatar: 'test', nickName: '测试' }]);
 
 const openCreateUser = () => {
-  CreateUserRef.value.open();
+  CreateUpdateUserRef.value.openCreate();
+};
+
+const openUpdateUser = (row) => {
+  CreateUpdateUserRef.value.openUpdate(row);
 };
 const handleDeleteUser = (row) => {
-  console.log(row.id);
+  table.handleDelete(DeleteUser, {
+    title: '删除用户',
+    content: `确认删除用户: ${row.username}`,
+    data: { id: row.id },
+    execFunc: getListData,
+  });
 };
+
+const getListData = () => {
+  UserList().then((res) => {
+    listData.value = res.list;
+  });
+};
+
+onMounted(() => {
+  getListData();
+});
 </script>
 
 <style scoped lang="less"></style>

@@ -33,6 +33,7 @@ export const usePermissionStore = defineStore('permission', {
         await this.initRoutes();
         return this.asyncRoutes;
       } catch (error) {
+        console.log(error);
         throw new Error("Can't build routes");
       }
     },

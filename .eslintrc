@@ -36,6 +36,7 @@
     "no-plusplus": "off",
     "no-param-reassign": "off",
     "no-shadow": "off",
+    "no-unused-expressions": "off",
     "guard-for-in": "off",
 
     "import/extensions": "off",
@@ -74,7 +75,7 @@
     {
       "files": ["*.vue"],
       "rules": {
-        "vue/component-name-in-template-casing": [2, "kebab-case"],
+        "vue/component-name-in-template-casing": 0,
         "vue/require-default-prop": 0,
         "vue/multi-word-component-names": 0,
         "vue/no-reserved-props": 0,
