@@ -9,6 +9,7 @@
           <t-space>
             <t-button @click="openUpdateRole(row)">编辑</t-button>
             <t-button theme="danger" @click="handleDeleteRole(row)">删除</t-button>
+            <t-button>设置权限</t-button>
           </t-space>
         </template>
       </t-table>
